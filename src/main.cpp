@@ -1,5 +1,11 @@
 #include <iostream>
+#include <string>
 #include "Task.h"
+
+struct Input {
+  std::string command;
+  std::string args;
+};
 
 void printLine() {
   const std::string line = "     ----------------------";
@@ -12,8 +18,16 @@ void listTasks(const std::vector<Task> &tasks) {
     }
 }
 
-void parseArgs(std::string s) {
-  std::string token = s.substr(0, s.find(" "));
+Input parseInput(std::string s) {
+  int idx = s.find(" ");
+  if (idx == std::string::npos) {
+    return {.command = s, .args = ""};
+  }
+  return {.command = s.substr(0, idx), .args = s.substr(idx, s.length())};
+}
+
+int parseArgs(std::string s) {
+  return stoi(s);
 }
 
 int main() {
@@ -26,12 +40,35 @@ int main() {
     std::string input;
     getline(std::cin, input);
     printLine();
-    if (input == "bye") {
+    Input parsed = parseInput(input);
+    if (parsed.command == "bye") {
       break;
     }
-    if (input == "list") {
+    if (parsed.command == "list") {
       listTasks(tasks);
       printLine();
+      continue;
+    }
+
+    if (parsed.command == "mark" || parsed.command == "unmark") {
+      try {
+        int idx = std::stoi(parsed.args);
+        if (idx == 0 || idx > tasks.size()) {
+          throw std::exception();
+        }
+        Task &task = tasks.at(idx - 1);
+        task.setMark(parsed.command == "mark");
+        if (parsed.command == "mark") {
+          std::cout << "    Nice! I've marked this task as done:" << std::endl;
+        } else {
+          std::cout << "    OK, I've marked this task as not done yet:" << std::endl;
+        }
+        std::cout << "      " << task << std::endl;
+        printLine();
+      } catch (std::exception e) {
+        std::cout << "    Invalid index" << std::endl;
+      }
+
       continue;
     }
     std::cout << "     added: " << input << std::endl;

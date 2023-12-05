@@ -6,11 +6,12 @@
 class Task {
 private:
   std::string name;
-  bool marked;
+  bool marked = false;
 public:
   Task(std::string name): name(name) {}
   std::string getName();
   void setMark(bool val);
+  bool getMark();
   friend std::ostream &operator<<(std::ostream& stream, const Task &task); 
 };
 

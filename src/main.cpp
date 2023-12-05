@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Task.h"
+#include "Tasks.h"
 
 struct Input {
   std::string command;
@@ -10,12 +11,6 @@ struct Input {
 void printLine() {
   const std::string line = "     ----------------------";
   std::cout << line << std::endl;
-}
-
-void listTasks(const std::vector<Task> &tasks) {
-    for (int i = 0; i < tasks.size(); i++) {
-      std::cout << "     " << i + 1 << ": " << tasks.at(i) << std::endl;
-    }
 }
 
 Input parseInput(std::string s) {
@@ -31,7 +26,7 @@ int parseArgs(std::string s) {
 }
 
 int main() {
-  std::vector<Task> tasks;
+  Tasks tasks;
   printLine();
   std::cout << "     Hello! I'm ChatCPP" << std::endl;
   std::cout << "     What can I do for you?" << std::endl;
@@ -45,18 +40,17 @@ int main() {
       break;
     }
     if (parsed.command == "list") {
-      listTasks(tasks);
+      std::cout << tasks << std::endl;
       printLine();
       continue;
     }
-
     if (parsed.command == "mark" || parsed.command == "unmark") {
       try {
         int idx = std::stoi(parsed.args);
         if (idx == 0 || idx > tasks.size()) {
           throw std::exception();
         }
-        Task &task = tasks.at(idx - 1);
+        Task &task = tasks[idx - 1];
         task.setMark(parsed.command == "mark");
         if (parsed.command == "mark") {
           std::cout << "    Nice! I've marked this task as done:" << std::endl;
@@ -72,7 +66,7 @@ int main() {
       continue;
     }
     std::cout << "     added: " << input << std::endl;
-    tasks.push_back(Task(input));
+    tasks.add(Task(input));
     printLine();
   }
   std::cout << "     Bye. Hope to see you again soon!" << std::endl;

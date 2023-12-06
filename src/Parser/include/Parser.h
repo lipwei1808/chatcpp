@@ -4,7 +4,14 @@
 #include "Instruction.h"
 
 class Parser {
+private:
+  struct Input {
+    std::string command;
+    std::string args;
+  };
+  static Input parseInput(std::string s); 
 public:
+  static int parseInt(std::string str);
   static Instruction* parse(std::string input);
 };
 

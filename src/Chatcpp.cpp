@@ -2,7 +2,7 @@
 #include <string>
 #include "Chatcpp.h"
 #include "Instruction.h"
-#include "Parser.h"
+#include "MainParser.h"
 #include "Tasks.h"
 
 void Chatcpp::printLine() {
@@ -20,12 +20,15 @@ void Chatcpp::getOpening() {
 void Chatcpp::run() {
   Tasks tasks;
   getOpening();
-
+  std::vector<std::string> inputs {"tetsta", "mark 1"};
+  int i = 0;
   while (true) {
     std::string input;
     getline(std::cin, input);
+    // input = inputs[i];
+    i++;
     printLine();
-    Instruction* instruction = Parser::parse(input);
+    Instruction* instruction = MainParser().parse(input);
     try {
       instruction->execute(tasks);
       if (input == "exit") {
@@ -34,6 +37,7 @@ void Chatcpp::run() {
     } catch (std::exception e) {
       std::cout << "    Invalid index" << std::endl;
     }
+    std::cout << tasks[0]->getName() << std::endl;
     printLine();
   }
 

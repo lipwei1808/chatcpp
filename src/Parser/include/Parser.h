@@ -4,15 +4,13 @@
 #include "Instruction.h"
 
 class Parser {
-private:
+protected:
   struct Input {
     std::string command;
     std::string args;
   };
-  static Input parseInput(std::string s); 
-public:
-  static int parseInt(std::string str);
-  static Instruction* parse(std::string input);
+private:
+  virtual Instruction* parse(std::string input) = 0;
 };
 
 #endif // _PARSER_H_

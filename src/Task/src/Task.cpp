@@ -19,3 +19,5 @@ std::ostream &operator<<(std::ostream& os, const Task &task) {
   os << "[" << icon << "] " << task.name;
   return os;
 }
+
+// Task::~Task() = default;

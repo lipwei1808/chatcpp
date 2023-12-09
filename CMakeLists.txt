@@ -8,6 +8,9 @@ add_subdirectory(src/Task)
 add_subdirectory(src/Parser)
 add_subdirectory(src/Instruction)
 
+enable_testing()
+add_subdirectory(test)
+
 add_executable(chatcpp src/main.cpp src/Chatcpp.cpp)
 
 target_link_libraries(chatcpp Task Parser Instruction)

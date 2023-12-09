@@ -13,6 +13,7 @@ public:
   void setMark(bool val);
   bool getMark();
   friend std::ostream &operator<<(std::ostream& stream, const Task &task); 
+  // virtual ~Task() = 0;
 };
 
 #endif // _TASK_H_

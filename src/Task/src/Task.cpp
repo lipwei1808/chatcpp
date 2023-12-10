@@ -20,4 +20,4 @@ std::ostream &operator<<(std::ostream& os, const Task &task) {
   return os;
 }
 
-// Task::~Task() = default;
+Task::~Task() = default;

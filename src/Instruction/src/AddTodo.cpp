@@ -9,7 +9,7 @@
 AddTodo::AddTodo(std::string input): input(input) {}
 
 void AddTodo::execute(Tasks &tasks) {
-  std::shared_ptr<Task> task = std::make_shared<Task>(Task(input));
+  std::shared_ptr<Task> task = std::make_shared<Todo>(Todo(input));
   tasks.add(task);
   std::cout << "    added: " << input << std::endl;
 }

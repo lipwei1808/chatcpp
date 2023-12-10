@@ -20,13 +20,9 @@ void Chatcpp::getOpening() {
 void Chatcpp::run() {
   Tasks tasks;
   getOpening();
-  std::vector<std::string> inputs {"tetsta", "mark 1"};
-  int i = 0;
   while (true) {
     std::string input;
     getline(std::cin, input);
-    // input = inputs[i];
-    i++;
     printLine();
     Instruction* instruction = MainParser().parse(input);
     try {
@@ -37,7 +33,6 @@ void Chatcpp::run() {
     } catch (std::exception e) {
       std::cout << "    Invalid index" << std::endl;
     }
-    std::cout << tasks[0]->getName() << std::endl;
     printLine();
   }
 

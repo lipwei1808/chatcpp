@@ -7,9 +7,14 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(Tests test.cpp)
+add_executable(Tests test.cpp mainParser_test.cpp)
 
+# target_include_directories(Tests PUBLIC ../src/Parser)
 target_link_libraries(Tests
+  Parser
+  Task
+  Instruction
   Catch2::Catch2WithMain
   )
+
 add_test (NAME MyTest COMMAND Tests)

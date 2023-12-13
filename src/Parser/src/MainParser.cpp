@@ -7,12 +7,37 @@
 #include "Mark.h"
 #include "Unmark.h"
 
+// trim from start (in place)
+static inline void ltrim(std::string &s) {
+    s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }));
+}
+
+// trim from end (in place)
+static inline void rtrim(std::string &s) {
+    s.erase(std::find_if(s.rbegin(), s.rend(), [](unsigned char ch) {
+        return !std::isspace(ch);
+    }).base(), s.end());
+}
+
+// trim from both ends (in place)
+static inline void trim(std::string &s) {
+    rtrim(s);
+    ltrim(s);
+}
+
 MainParser::Input MainParser::parseInput(std::string s) {
+    trim(s);
     int idx = s.find(" ");
     if (idx == std::string::npos) {
       return {.command = s, .args = ""};
     }
-    return {.command = s.substr(0, idx), .args = s.substr(idx, s.length())};
+    std::string command = s.substr(0, idx);
+    std::string args = s.substr(idx, s.length());
+    trim(command);
+    trim(args);
+    return {.command = command, .args = args};
   }
 
 int MainParser::parseInt(std::string str) {

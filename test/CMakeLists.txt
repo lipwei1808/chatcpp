@@ -7,7 +7,8 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(Tests test.cpp mainParser_test.cpp)
+file(GLOB PARSER_SOURCES Parser/*.cpp)
+add_executable(Tests test.cpp ${PARSER_SOURCES})
 
 # target_include_directories(Tests PUBLIC ../src/Parser)
 target_link_libraries(Tests

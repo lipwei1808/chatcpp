@@ -10,7 +10,6 @@ FetchContent_MakeAvailable(Catch2)
 file(GLOB PARSER_SOURCES Parser/*.cpp)
 add_executable(Tests test.cpp ${PARSER_SOURCES})
 
-# target_include_directories(Tests PUBLIC ../src/Parser)
 target_link_libraries(Tests
   Parser
   Task

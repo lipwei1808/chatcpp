@@ -2,11 +2,38 @@
 #define private public
 #define protected public
 #include <catch2/catch_test_macros.hpp>
+#include <catch2/matchers/catch_matchers_templated.hpp>
+#include <ctime>
+#include <sstream>
+#include <iostream>
+#include <iomanip>
 #include "MainParser.h"
 #include "Exit.h"
 #include "List.h"
 #include "Mark.h"
 #include "Unmark.h"
+
+template<typename T>
+struct DateMatcher : Catch::Matchers::MatcherGenericBase {
+    DateMatcher(T const& t):
+        t{ t }
+    {}
+    
+    bool match(T const& other) const {
+      T copy = t;
+      std::time_t expected = std::mktime(&copy);
+      T time = MainParser::parseDate("18/08/2001", '/');
+      std::time_t actual = std::mktime(&time);
+      return expected == actual;
+    }
+
+    std::string describe() const override {
+        return "Equals: ";
+    }
+
+private:
+    T const& t;
+};
 
 TEST_CASE("parseInt correctly returns integer", "[parseInt]") {
   REQUIRE(MainParser::parseInt("3") == 3);
@@ -19,6 +46,30 @@ TEST_CASE("parseInt throws exception on invalid string", "[parseInt]") {
   REQUIRE_THROWS(MainParser::parseInt("invalid"));
   REQUIRE_THROWS(MainParser::parseInt("x3.0"));
   REQUIRE_THROWS(MainParser::parseInt(""));
+}
+
+TEST_CASE("parseDate parses valid date correctly", "[parseDate]") {
+  // Setup expected
+  std::tm expected = {0};
+  std::istringstream is("18-08-2001");
+  is >> std::get_time(&expected, "%d-%m-%Y");
+
+  REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate("18/08/2001", '/')));
+  REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate("18-08-2001", '-')));
+  REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("19/08/2001", '/')));
+  REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("18/09/2001", '/')));
+  REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("18/08/2002", '/')));
+  REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("8/08/2002", '/')));
+  REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("18/8/2002", '/')));
+}
+
+TEST_CASE("parseDate throws exception for invalid dates", "[parseDate]") {
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("", '/')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '.')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '/')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/201", '/')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/2001", '/')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("32/08/2002", '/')));
 }
 
 TEST_CASE("parseInput parses args and command word", "[parseInput]") {

@@ -1,4 +1,7 @@
-#include "string"
+#include <ctime>
+#include <string>
+#include <sstream>
+#include <iostream>
 #include "Instruction.h"
 #include "MainParser.h"
 #include "AddTodo.h"
@@ -59,3 +62,29 @@ Instruction* MainParser::parse(std::string input) {{
   
   return new AddTodo(input);
 }}
+
+std::tm MainParser::parseDate(const std::string &s, char delimiter) {
+  std::istringstream is(s);
+  int d, m, y;
+  char delimeter1, delimeter2;
+  if (!(is >> d >> delimeter1 >> m >> delimeter2 >> y)) {
+    throw std::exception();
+  }
+  if (delimeter1 != delimiter || delimeter2 != delimiter) {
+    throw std::exception();
+  }
+
+  std::tm dateObject {0};
+  dateObject.tm_mday = d;
+  dateObject.tm_mon = m;
+  dateObject.tm_year = y;
+
+  std::time_t when = std::mktime(&dateObject);
+  std::tm* time = std::localtime(&when);
+  
+  if (time->tm_mday != d || time->tm_mon != m || time->tm_year != y) {
+    throw std::exception();
+  }
+
+  return dateObject;
+}

@@ -2,7 +2,7 @@
 #include <iostream>
 #include "Task.h"
 
-std::string Task::getName() {
+std::string Task::getName() const {
   return name;
 }
 
@@ -10,7 +10,7 @@ void Task::setMark(bool val) {
   marked = val;
 }
 
-bool Task::getMark() {
+bool Task::getMark() const {
   return marked;
 }
 

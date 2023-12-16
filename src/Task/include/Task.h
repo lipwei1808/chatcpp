@@ -9,9 +9,9 @@ private:
   bool marked = false;
 public:
   Task(std::string name): name(name) {}
-  std::string getName();
+  std::string getName() const;
   void setMark(bool val);
-  bool getMark();
+  bool getMark() const;
   friend std::ostream &operator<<(std::ostream& stream, const Task &task); 
   virtual ~Task() = 0;
 };

@@ -1,11 +1,16 @@
 #include <string>
+#include <memory>
+#include "Todo.h"
+#include "TodoParser.h"
 #include "Instruction.h"
-#include "Parser.h"
+#include "Add.h"
 #include "MainParser.h"
 
-class TodoParser: public Parser {
-public:
-  Instruction* parser(std::string input) {
-    int idx = MainParser::parseInt(input);
+Instruction* TodoParser::parse(std::string input) {
+  MainParser::trim(input);
+  if (input == "") {
+    throw std::exception();
   }
-};
+  std::shared_ptr<Task> ptr = std::make_shared<Todo>(Todo(input));
+  return new Add(ptr);
+}

@@ -56,6 +56,9 @@ TEST_CASE("parseDate parses valid date correctly", "[parseDate]") {
 
   REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate("18/08/2001", '/')));
   REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate("18-08-2001", '-')));
+  REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate(" 18-08-2001 ", '-'))); // with whitespace
+  REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate(" \r\t18-08-2001\n ", '-'))); // with whitespaces
+  REQUIRE_THAT(expected, DateMatcher<std::tm>(MainParser::parseDate("18-08-2001 other stuff", '-'))); // parses fine with other stuff
   REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("19/08/2001", '/')));
   REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("18/09/2001", '/')));
   REQUIRE_THAT(expected, !DateMatcher<std::tm>(MainParser::parseDate("18/08/2002", '/')));
@@ -71,6 +74,7 @@ TEST_CASE("parseDate throws exception for invalid dates", "[parseDate]") {
   REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/201", '/'))); // invalid year
   REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/2001", '/'))); // invalid month
   REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("32/08/2002", '/'))); // invalid day
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("other stuff 18/08/2001", '/'))); // random stuff at the start
 }
 
 TEST_CASE("parseInput parses args and command word", "[parseInput]") {
@@ -154,7 +158,8 @@ TEST_CASE("parse correctly returns instruction", "[parse]") {
   REQUIRE(dynamic_cast<Exit*>(MainParser().parse("exit")) != nullptr);
   REQUIRE(dynamic_cast<Exit*>(MainParser().parse("exit 421")) != nullptr);
   REQUIRE(dynamic_cast<Exit*>(MainParser().parse(" exit 421")) != nullptr);
-  REQUIRE(dynamic_cast<Exit*>(MainParser().parse("exits")) == nullptr);
+  REQUIRE_THROWS(dynamic_cast<Exit*>(MainParser().parse("exits")));
+  REQUIRE_THROWS(dynamic_cast<Exit*>(MainParser().parse("exits")));
 
   REQUIRE(dynamic_cast<List*>(MainParser().parse("list")) != nullptr);
   REQUIRE(dynamic_cast<List*>(MainParser().parse("list ")) != nullptr);
@@ -164,15 +169,15 @@ TEST_CASE("parse correctly returns instruction", "[parse]") {
 
   REQUIRE(dynamic_cast<Mark*>(MainParser().parse("mark 4241")) != nullptr);
   REQUIRE(dynamic_cast<Mark*>(MainParser().parse(" mark 431")) != nullptr);
-  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark a")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark ")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse(" mark ")) == nullptr);
+  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark a")));
+  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark")));
+  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse("mark ")));
+  REQUIRE_THROWS(dynamic_cast<Mark*>(MainParser().parse(" mark ")));
 
   REQUIRE(dynamic_cast<Unmark*>(MainParser().parse("unmark 4241")) != nullptr);
   REQUIRE(dynamic_cast<Unmark*>(MainParser().parse(" unmark 431")) != nullptr);
-  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark ga")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark ")) == nullptr);
-  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse(" unmark ")) == nullptr);
+  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark ga")));
+  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark")));
+  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark ")));
+  REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse(" unmark ")));
 }

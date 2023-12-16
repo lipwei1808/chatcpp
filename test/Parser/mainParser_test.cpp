@@ -65,11 +65,12 @@ TEST_CASE("parseDate parses valid date correctly", "[parseDate]") {
 
 TEST_CASE("parseDate throws exception for invalid dates", "[parseDate]") {
   REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("", '/')));
-  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '.')));
-  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '/')));
-  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/201", '/')));
-  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/2001", '/')));
-  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("32/08/2002", '/')));
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '.'))); // invalid delimeter
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("19-8-2001", '/'))); // invalid delimeter
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("29/02/2023", '/'))); // leap years
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/201", '/'))); // invalid year
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("18/13/2001", '/'))); // invalid month
+  REQUIRE_THROWS(DateMatcher<std::tm>(MainParser::parseDate("32/08/2002", '/'))); // invalid day
 }
 
 TEST_CASE("parseInput parses args and command word", "[parseInput]") {

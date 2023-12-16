@@ -74,15 +74,17 @@ std::tm MainParser::parseDate(const std::string &s, char delimiter) {
     throw std::exception();
   }
 
+  // Populate tm struct with values
   std::tm dateObject {0};
   dateObject.tm_mday = d;
-  dateObject.tm_mon = m;
-  dateObject.tm_year = y;
+  dateObject.tm_mon = m - 1;
+  dateObject.tm_year = y - 1900;
 
+  // Localise to time_t and reconvert back
   std::time_t when = std::mktime(&dateObject);
   std::tm* time = std::localtime(&when);
   
-  if (time->tm_mday != d || time->tm_mon != m || time->tm_year != y) {
+  if (time->tm_mday != d || time->tm_mon + 1 != m || time->tm_year + 1900 != y) {
     throw std::exception();
   }
 

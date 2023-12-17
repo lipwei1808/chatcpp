@@ -24,8 +24,8 @@ void Chatcpp::run() {
     std::string input;
     getline(std::cin, input);
     printLine();
-    Instruction* instruction = MainParser().parse(input);
     try {
+      Instruction* instruction = MainParser().parse(input);
       instruction->execute(tasks);
       if (input == "exit") {
         break;

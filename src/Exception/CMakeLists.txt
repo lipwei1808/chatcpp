@@ -1,0 +1,3 @@
+add_library(Exception INTERFACE)
+
+target_include_directories(Exception INTERFACE include)

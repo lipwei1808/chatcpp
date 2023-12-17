@@ -10,7 +10,8 @@ private:
   std::tm from;
 public:
   Event(std::string name, std::tm to, std::tm from);
-  std::string getFormattedDateTime();
+  friend std::ostream &operator<<(std::ostream& stream, const Event &event);
+  virtual void print(std::ostream &os) const;
   ~Event() = default;
 };
 

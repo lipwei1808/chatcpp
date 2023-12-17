@@ -9,7 +9,8 @@ private:
   std::tm when;
 public:
   Deadline(std::string name, std::tm when);
-  std::string getFormattedDateTime();
+  friend std::ostream &operator<<(std::ostream& stream, const Deadline &deadline);
+  virtual void print(std::ostream &os) const;
   ~Deadline() = default;
 };
 

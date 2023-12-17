@@ -1,5 +1,6 @@
 #ifndef _TASK_H_
 #define _TASK_H_
+#include <ctime>
 #include <string>
 #include <iostream>
 
@@ -7,12 +8,15 @@ class Task {
 private:
   std::string name;
   bool marked = false;
+protected:
+  static std::string getFormattedDateTime(std::tm);
 public:
   Task(std::string name): name(name) {}
   std::string getName() const;
   void setMark(bool val);
   bool getMark() const;
   friend std::ostream &operator<<(std::ostream& stream, const Task &task); 
+  virtual void print(std::ostream& os) const;
   virtual ~Task() = 0;
 };
 

@@ -6,12 +6,14 @@
 
 class ParserException: public ChatcppException {
 private:
-  std::string msg = "";
+  std::string message = "";
 public:
   ParserException() = default;
-  ParserException(std::string msg): msg(msg) {}
-  char* what() {
-    return generateChatcppError(" PARSER EXCEPTION " + msg);
+  ParserException(std::string message) {
+    setMsg(message);
+  }
+  virtual const char* what() {
+    return msg;
   }
 };
 

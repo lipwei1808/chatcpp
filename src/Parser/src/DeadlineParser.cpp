@@ -1,3 +1,4 @@
+#include <iostream>
 #include <string>
 #include <ctime>
 #include "Deadline.h"
@@ -5,16 +6,17 @@
 #include "DeadlineParser.h"
 #include "Instruction.h"
 #include "MainParser.h"
+#include "ParserException.h"
 
 Instruction* DeadlineParser::parse(std::string input) {
   MainParser::trim(input);
   if (input == "") {
-    throw std::exception();
+    throw ParserException("no args");
   }
 
   std::vector<std::string> strings = MainParser::split(input, ' ');
   if (strings.size() != 2) {
-    throw std::exception();
+    throw ParserException("invalid number of arguments");
   }
 
   std::tm dt = MainParser::parseDate(strings[1], '/');

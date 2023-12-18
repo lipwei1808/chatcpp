@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "Chatcpp.h"
+#include "ChatcppException.h"
 #include "Instruction.h"
 #include "MainParser.h"
 #include "Tasks.h"
@@ -30,9 +31,9 @@ void Chatcpp::run() {
       if (input == "exit") {
         break;
       }
-    } catch (std::exception e) {
-      std::cout << "    Invalid index" << std::endl;
-    }
+    } catch (ChatcppException& e) {
+      std::cout << e.what() << std::endl;
+    } 
     printLine();
   }
 

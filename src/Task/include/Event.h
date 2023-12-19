@@ -5,14 +5,16 @@
 #include "Task.h"
 
 class Event: public Task {
-private:
-  std::tm to;
-  std::tm from;
 public:
   Event(std::string name, std::tm to, std::tm from);
   friend std::ostream &operator<<(std::ostream& stream, const Event &event);
   virtual void print(std::ostream &os) const;
   ~Event() = default;
+public:
+  static std::string format;
+private:
+  std::tm to;
+  std::tm from;
 };
 
 #endif // _EVENT_H_

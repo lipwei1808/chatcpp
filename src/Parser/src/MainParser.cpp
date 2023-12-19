@@ -6,6 +6,8 @@
 #include "MainParser.h"
 #include "TodoParser.h"
 #include "DeadlineParser.h"
+#include "ParserException.h"
+#include "UnknownCommandException.h"
 #include "EventParser.h"
 #include "Exit.h"
 #include "List.h"
@@ -68,7 +70,7 @@ Instruction* MainParser::parse(std::string input) {{
     return EventParser().parse(parsed.args);
   }
 
-  throw std::exception();
+  throw UnknownCommandException();
 }}
 
 std::tm MainParser::parseDate(std::string s, char delimiter) {
@@ -77,10 +79,10 @@ std::tm MainParser::parseDate(std::string s, char delimiter) {
   int d, m, y;
   char delimeter1, delimeter2;
   if (!(is >> d >> delimeter1 >> m >> delimeter2 >> y)) {
-    throw std::exception();
+    throw ParserException("invalid date format");
   }
   if (delimeter1 != delimiter || delimeter2 != delimiter) {
-    throw std::exception();
+    throw ParserException("invalid delimeters");
   }
 
   // Populate tm struct with values
@@ -94,7 +96,7 @@ std::tm MainParser::parseDate(std::string s, char delimiter) {
   std::tm* time = std::localtime(&when);
   
   if (time->tm_mday != d || time->tm_mon + 1 != m || time->tm_year + 1900 != y) {
-    throw std::exception();
+    throw ParserException("invalid date");
   }
 
   return dateObject;

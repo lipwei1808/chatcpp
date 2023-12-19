@@ -4,6 +4,8 @@
 #include "Event.h"
 #include "Task.h"
 
+std::string Event::format = "event [text] [from date] [to date] eg: event run 18/08/2001 19/08/2001";
+
 Event::Event(std::string name, std::tm to, std::tm from): Task(name), from(from), to(to) {}
 
 void Event::print(std::ostream &os) const {

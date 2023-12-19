@@ -11,12 +11,12 @@
 Instruction* DeadlineParser::parse(std::string input) {
   MainParser::trim(input);
   if (input == "") {
-    throw ParserException("no args");
+    throw ParserException(Deadline::format);
   }
 
   std::vector<std::string> strings = MainParser::split(input, ' ');
   if (strings.size() != 2) {
-    throw ParserException("invalid number of arguments");
+    throw ParserException(Deadline::format);
   }
 
   std::tm dt = MainParser::parseDate(strings[1], '/');

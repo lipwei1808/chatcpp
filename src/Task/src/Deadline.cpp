@@ -4,6 +4,8 @@
 #include "Deadline.h"
 #include "Task.h"
 
+std::string Deadline::format = "deadline [text] [date] eg: deadline run 18/08/2001";
+
 Deadline::Deadline(std::string name, std::tm when): Task(name), when(when) {}
 
 void Deadline::print(std::ostream &os) const {

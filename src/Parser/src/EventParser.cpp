@@ -3,18 +3,19 @@
 #include "Event.h"
 #include "Add.h"
 #include "EventParser.h"
+#include "ParserException.h"
 #include "Instruction.h"
 #include "MainParser.h"
 
 Instruction* EventParser::parse(std::string input) {
   MainParser::trim(input);
   if (input == "") {
-    throw std::exception();
+    throw ParserException(Event::format);
   }
 
   std::vector<std::string> strings = MainParser::split(input, ' ');
   if (strings.size() != 3) {
-    throw std::exception();
+    throw ParserException(Event::format);
   }
 
   std::tm from = MainParser::parseDate(strings[1], '/');

@@ -181,3 +181,12 @@ TEST_CASE("parse correctly returns instruction", "[parse]") {
   REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse("unmark ")));
   REQUIRE_THROWS(dynamic_cast<Unmark*>(MainParser().parse(" unmark ")));
 }
+
+
+TEST_CASE("convertDateToString correctly returns string", "[convertDateToString]") {
+  std::tm date = {0};
+  std::istringstream is("18-08-2001");
+  is >> std::get_time(&date, "%d-%m-%Y");
+  REQUIRE(MainParser::convertDateToString(date) == "18/08/2001");
+  REQUIRE(MainParser::convertDateToString(date) != "18/08/2002");
+}

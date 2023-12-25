@@ -1,0 +1,22 @@
+#ifndef _STORAGE_H_
+#define _STORAGE_H_
+#include <fstream>
+#include <string>
+#include <memory>
+#include "Tasks.h"
+
+class Storage {
+public:
+  void save(Saveable &items) const;
+  Tasks load() const;
+  std::string getFilepath() const ;
+  static std::shared_ptr<Storage> getInstance(std::string filepath);
+
+private: 
+  Storage(std::string filepath);
+  void checkFilepath();
+private:
+  std::string filepath;
+};
+
+#endif // _STORAGE_H_

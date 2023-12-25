@@ -3,8 +3,9 @@
 #include <ctime>
 #include <string>
 #include <iostream>
+#include "Saveable.h"
 
-class Task {
+class Task: public Saveable {
 private:
   std::string name;
   bool marked = false;

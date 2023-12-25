@@ -1,4 +1,5 @@
 #include <ctime>
+#include <iomanip>
 #include <string>
 #include <sstream>
 #include <iostream>
@@ -111,4 +112,10 @@ std::vector<std::string> MainParser::split(std::string s, char delimeter) {
   }
 
   return res;
+}
+
+std::string MainParser::convertDateToString(std::tm time) {
+  std::stringstream ss;
+  ss << std::put_time(&time, "%d/%m/%Y");
+  return ss.str();
 }

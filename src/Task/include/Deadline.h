@@ -1,6 +1,7 @@
 #ifndef _DEADLINE_H_
 #define _DEADLINE_H_
 #include <ctime>
+#include <vector>
 #include <string>
 #include "Task.h"
 
@@ -9,6 +10,7 @@ public:
   Deadline(std::string name, std::tm when);
   friend std::ostream &operator<<(std::ostream& stream, const Deadline &deadline);
   virtual void print(std::ostream &os) const;
+  virtual std::vector<std::string> parse();
   ~Deadline() = default;
 public:
   static std::string format;

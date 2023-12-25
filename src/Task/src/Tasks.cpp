@@ -1,5 +1,6 @@
 #include <iostream>
 #include <memory>
+#include "Storage.h"
 #include "Tasks.h"
 #include "Task.h"
 
@@ -13,6 +14,13 @@ size_t Tasks::size() const {
 
 std::shared_ptr<Task> Tasks::operator[](int idx) {
   return tasks[idx];
+}
+
+void Tasks::save() {
+  std::shared_ptr<Storage> s = Storage::getInstance("text.txt");
+  for (const std::shared_ptr<Task> t: tasks) {
+    s->save(*t);
+  }
 }
 
 std::ostream &operator<<(std::ostream &os, const Tasks &tasks) {

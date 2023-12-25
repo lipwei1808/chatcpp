@@ -16,6 +16,7 @@ public:
   static std::vector<std::string> split(std::string s, char delimeter);
   static int parseInt(std::string str);
   static void trim(std::string &s);
+  static std::string convertDateToString(std::tm);
   virtual Instruction* parse(std::string input);
 };
 

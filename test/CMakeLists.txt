@@ -14,6 +14,7 @@ target_link_libraries(Tests
   Parser
   Task
   Instruction
+  Storage
   Catch2::Catch2WithMain
   )
 

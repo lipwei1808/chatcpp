@@ -10,7 +10,7 @@
 Storage::Storage(std::string filepath): filepath(filepath) {}
 
 std::shared_ptr<Storage> Storage::getInstance(std::string filepath) {
-  if (filepath == "") {
+  if (!checkFilepath(filepath)) {
     return nullptr;
   }
 
@@ -55,4 +55,10 @@ std::string Storage::getFilepath() const {
   return filepath;
 }
 
-void Storage::checkFilepath() {}
+bool Storage::checkFilepath(std::string filepath) {
+  if (filepath == "") {
+    return false;
+  }
+
+  return true;
+}

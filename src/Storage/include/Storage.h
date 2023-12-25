@@ -14,7 +14,7 @@ public:
 
 private: 
   Storage(std::string filepath);
-  void checkFilepath();
+  static bool checkFilepath(std::string filepath);
 private:
   std::string filepath;
 };

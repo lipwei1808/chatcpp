@@ -21,7 +21,7 @@ void Chatcpp::getOpening() {
 }
 
 void Chatcpp::run() {
-  std::shared_ptr<Storage> s = Storage::getInstance("text.txt");
+  std::unique_ptr<Storage> s = Storage::getInstance("text.txt");
   Tasks tasks;
   try {
 

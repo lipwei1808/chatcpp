@@ -7,7 +7,7 @@
 
 class Event: public Task {
 public:
-  Event(std::string name, std::tm to, std::tm from);
+  Event(std::string name, std::tm to, std::tm from, bool marked = 0);
   friend std::ostream &operator<<(std::ostream& stream, const Event &event);
   virtual void print(std::ostream &os) const;
   virtual std::vector<std::string> parse();

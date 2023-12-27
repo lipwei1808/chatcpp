@@ -12,6 +12,7 @@ void Unmark::execute(Tasks &tasks) {
   }
   std::shared_ptr<Task> task = tasks[index];
   task->setMark(false);
+  tasks.save();
   std::cout << "    OK, I've marked this task as not done yet:" << std::endl;
   std::cout << "      " << *task << std::endl;
 }

@@ -12,7 +12,7 @@ private:
 protected:
   static std::string getFormattedDateTime(std::tm);
 public:
-  Task(std::string name): name(name) {}
+  Task(std::string name, bool marked = false) {}
   std::string getName() const;
   void setMark(bool val);
   bool getMark() const;

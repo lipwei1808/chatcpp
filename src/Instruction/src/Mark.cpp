@@ -12,6 +12,7 @@ void Mark::execute(Tasks &tasks) {
   }
   std::shared_ptr<Task> task = tasks[index];
   task->setMark(true);
+  tasks.save();
   std::cout << "    Nice! I've marked this task as done:" << std::endl;
   std::cout << "      " << *task << std::endl;
 }

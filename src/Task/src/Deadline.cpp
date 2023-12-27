@@ -8,7 +8,7 @@
 
 std::string Deadline::format = "deadline [text] [date] eg: deadline run 18/08/2001";
 
-Deadline::Deadline(std::string name, std::tm when): Task(name), when(when) {}
+Deadline::Deadline(std::string name, std::tm when, bool marked): Task(name, marked), when(when) {}
 
 void Deadline::print(std::ostream &os) const {
   Task::print(os);

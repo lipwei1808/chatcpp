@@ -74,6 +74,7 @@ std::shared_ptr<Task> parseToTask(std::vector<std::string>::iterator start, std:
     return nullptr;
   }
   std::vector<std::string> fields = parseFields(start, end);
+
   if (task == "todo") {
     if (fields.size() != 2) {
       return nullptr;
@@ -83,16 +84,18 @@ std::shared_ptr<Task> parseToTask(std::vector<std::string>::iterator start, std:
     if (fields.size() != 3) {
       return nullptr;
     }
+    bool marked = fields[1] == "1";
     std::tm dt = MainParser::parseDate(fields[2], '/');
-    return std::make_shared<Deadline>(Deadline(fields[0], dt));
+    return std::make_shared<Deadline>(Deadline(fields[0], dt, marked));
   } else if (task == "event") {
     if (fields.size() != 4) {
       return nullptr;
     }
 
+    bool marked = fields[1] == "1";
     std::tm from = MainParser::parseDate(fields[2], '/');
     std::tm to = MainParser::parseDate(fields[3], '/');
-    return std::make_shared<Event>(Event(fields[0], from, to));
+    return std::make_shared<Event>(Event(fields[0], from, to, marked));
   }
   return nullptr;
 }

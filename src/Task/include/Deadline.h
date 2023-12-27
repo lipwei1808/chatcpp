@@ -7,7 +7,7 @@
 
 class Deadline: public Task {
 public:
-  Deadline(std::string name, std::tm when);
+  Deadline(std::string name, std::tm when, bool marked = 0);
   friend std::ostream &operator<<(std::ostream& stream, const Deadline &deadline);
   virtual void print(std::ostream &os) const;
   virtual std::vector<std::string> parse();

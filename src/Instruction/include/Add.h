@@ -12,6 +12,7 @@ private:
 public:
   Add(std::shared_ptr<Task> toAdd);
   virtual void execute(Tasks &tasks) override;
+  virtual ~Add() = default;
 };
 
 #endif // _ADD_H_

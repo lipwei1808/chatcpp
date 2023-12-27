@@ -37,6 +37,7 @@ void Chatcpp::run() {
     try {
       Instruction* instruction = MainParser().parse(input);
       instruction->execute(tasks);
+      delete instruction;
       if (input == "exit") {
         break;
       }

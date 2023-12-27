@@ -16,7 +16,7 @@ public:
 
 private: 
   Storage(std::string filepath);
-  std::vector<std::shared_ptr<Task>> parseToTasks(std::vector<std::string> lines);
+  std::vector<std::shared_ptr<Task>> parseToTasks(std::vector<std::string> lines) const;
   static bool checkFilepath(std::string filepath);
 private:
   std::string filepath;

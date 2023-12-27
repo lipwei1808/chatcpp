@@ -4,6 +4,8 @@
 #include "Tasks.h"
 #include "Task.h"
 
+Tasks::Tasks(std::vector<std::shared_ptr<Task>> tasks): tasks(tasks) {}
+
 void Tasks::add(std::shared_ptr<Task> t) {
   tasks.push_back(t);
 }

@@ -10,6 +10,7 @@ private:
 public:
   std::vector<std::shared_ptr<Task>> tasks; // TODO: Refer to above
   Tasks() = default;
+  Tasks(std::vector<std::shared_ptr<Task>> tasks);
   void add(std::shared_ptr<Task> t);
   size_t size() const;
   std::shared_ptr<Task> operator[](int idx);

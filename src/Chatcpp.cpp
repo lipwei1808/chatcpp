@@ -1,10 +1,12 @@
 #include <iostream>
+#include <memory>
 #include <string>
 #include "Chatcpp.h"
 #include "ChatcppException.h"
 #include "Instruction.h"
 #include "MainParser.h"
 #include "Tasks.h"
+#include "Storage.h"
 
 void Chatcpp::printLine() {
   const std::string line = "     ----------------------";
@@ -19,7 +21,14 @@ void Chatcpp::getOpening() {
 }
 
 void Chatcpp::run() {
+  std::shared_ptr<Storage> s = Storage::getInstance("text.txt");
   Tasks tasks;
+  try {
+
+  tasks = s->load();
+  } catch (ChatcppException& e) {
+    std::cout << e.what() << std::endl;
+  }
   getOpening();
   while (true) {
     std::string input;

@@ -14,7 +14,6 @@
 #include "Storage.h"
 
 int main() {
-  std::shared_ptr<Storage> s = Storage::getInstance("text.txt");
   Chatcpp().run();
   return 0;
 }

@@ -8,6 +8,7 @@
 class Exit: public Instruction {
 public:
   virtual void execute(Tasks &task) override;
+  virtual ~Exit() = default;
 };
 
 #endif // _EXIT_H

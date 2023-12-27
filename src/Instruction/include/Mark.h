@@ -9,6 +9,7 @@ private:
 public:
   Mark(int index);
   virtual void execute(Tasks &tasks) override;
+  virtual ~Mark() = default;
 };
 
 #endif // _MARK_H_

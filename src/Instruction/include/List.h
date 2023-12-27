@@ -6,6 +6,7 @@
 class List: public Instruction {
 public:
   virtual void execute(Tasks &tasks) override; 
+  virtual ~List() = default;
 };
 
 #endif // _LIST_H_

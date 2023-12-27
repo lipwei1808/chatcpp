@@ -9,6 +9,7 @@ private:
 public:
   Unmark(int index);
   virtual void execute(Tasks &tasks) override;
+  virtual ~Unmark() = default;
 };
 
 #endif // _UNMARK_H_

@@ -79,7 +79,8 @@ std::shared_ptr<Task> parseToTask(std::vector<std::string>::iterator start, std:
     if (fields.size() != 2) {
       return nullptr;
     }
-    return std::make_shared<Todo>(Todo(fields[0]));
+    bool marked = fields[1] == "1";
+    return std::make_shared<Todo>(Todo(fields[0], marked));
   } else if (task == "deadline") {
     if (fields.size() != 3) {
       return nullptr;
@@ -127,4 +128,10 @@ bool Storage::checkFilepath(std::string filepath) {
   }
 
   return true;
+}
+
+void Storage::clear() const {
+  std::ofstream file;
+  file.open(filepath, std::ofstream::out | std::ofstream::trunc);
+  file.close();
 }

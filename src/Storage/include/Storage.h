@@ -12,6 +12,7 @@ public:
   void save(Saveable &items) const;
   Tasks load() const;
   std::string getFilepath() const ;
+  void clear() const;
   static std::shared_ptr<Storage> getInstance(std::string filepath);
 
 private: 

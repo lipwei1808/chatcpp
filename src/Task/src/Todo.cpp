@@ -5,7 +5,7 @@
 
 std::string Todo::format = "todo [text] eg: todo run";
 
-Todo::Todo(std::string name): Task(name) {}
+Todo::Todo(std::string name, bool marked): Task(name, marked) {}
 
 std::vector<std::string> Todo::parse() {
   using namespace std;

@@ -6,7 +6,7 @@
 
 class Todo: public Task {
 public:
-  Todo(std::string name);
+  Todo(std::string name, bool marked = false);
   virtual std::vector<std::string> parse();
   ~Todo() = default;
 public:

@@ -20,6 +20,7 @@ std::shared_ptr<Task> Tasks::operator[](int idx) {
 
 void Tasks::save() {
   std::shared_ptr<Storage> s = Storage::getInstance("text.txt");
+  s->clear();
   for (const std::shared_ptr<Task> t: tasks) {
     s->save(*t);
   }

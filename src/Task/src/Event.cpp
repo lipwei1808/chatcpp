@@ -17,7 +17,8 @@ void Event::print(std::ostream &os) const {
 std::vector<std::string> Event::parse() {
   using namespace std;
   vector<string> lines;
-  lines.push_back("5");
+  lines.push_back("6");
+  lines.push_back("event");
   lines.push_back(to_string(getName().length()));
   std::string marked = getMark() ? "1" : "0";
   lines.push_back(to_string(marked.length()));

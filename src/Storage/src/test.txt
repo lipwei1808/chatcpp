@@ -1,3 +1,0 @@
-a,b,c
-hi,bye,chi
-x,d

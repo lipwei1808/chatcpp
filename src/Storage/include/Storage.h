@@ -13,7 +13,7 @@ public:
   Tasks load() const;
   std::string getFilepath() const ;
   void clear() const;
-  static std::shared_ptr<Storage> getInstance(std::string filepath);
+  static std::unique_ptr<Storage> getInstance(std::string filepath);
 
 private: 
   Storage(std::string filepath);

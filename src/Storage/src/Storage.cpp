@@ -37,13 +37,13 @@ static std::vector<std::string> parseFields(std::vector<std::string>::iterator s
 
 Storage::Storage(std::string filepath): filepath(filepath) {}
 
-std::shared_ptr<Storage> Storage::getInstance(std::string filepath) {
+std::unique_ptr<Storage> Storage::getInstance(std::string filepath) {
   if (!checkFilepath(filepath)) {
     return nullptr;
   }
 
   // TODO: Read why cant do std::make_shared<Storage>(filepath);
-  return std::make_shared<Storage>(Storage(filepath));
+  return std::unique_ptr<Storage>(new Storage(filepath));
 }
 
 void Storage::save(Saveable &item) const {

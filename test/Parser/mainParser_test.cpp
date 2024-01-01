@@ -1,4 +1,3 @@
-#define CATCH_CONFIG_MAIN
 #define private public
 #define protected public
 #include <catch2/catch_test_macros.hpp>

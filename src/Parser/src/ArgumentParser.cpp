@@ -11,9 +11,9 @@ static inline std::pair<int, int> getPairFromIndex(int current, int size) {
   return std::pair<int, int>(current + 1, current + size - 1);
 }
 
-static std::vector<std::pair<int, int>> getPrefixes(
+std::vector<std::pair<int, int>> ArgumentParser::getPrefixes(
   std::string input,
-  std::unordered_set<std::string> keys
+  std::unordered_set<std::string>* keys
 ) {
   std::vector<std::pair<int, int>> prefixes;
   std::regex pattern("\\s(\\S+:\\.*)");
@@ -25,7 +25,7 @@ static std::vector<std::pair<int, int>> getPrefixes(
     int size = sm.str().length();
     std::pair<int, int> pair = getPairFromIndex(current, size);
     std::string arg = input.substr(pair.first, pair.second + 1);
-    if (keys.find(arg) != keys.end()) {
+    if (!keys || (keys->find(arg) != keys->end())) {
       prefixes.push_back(pair);
     }
     current += size;
@@ -35,9 +35,9 @@ static std::vector<std::pair<int, int>> getPrefixes(
   return prefixes;
 }
 
-static std::unordered_map<std::string, std::string> getEntries(
+std::unordered_map<std::string, std::string> ArgumentParser::getEntries(
   std::string input,
-  std::vector<std::pair<int, int>> prefixes
+  std::vector<std::pair<int, int>>& prefixes
 ) {
   std::unordered_map<std::string, std::string> entries;
 
@@ -59,7 +59,7 @@ static std::unordered_map<std::string, std::string> getEntries(
 
 std::unordered_map<std::string, std::string> ArgumentParser::parse(
   std::string input,
-  std::unordered_set<std::string> keys
+  std::unordered_set<std::string>* keys
 ) {
   std::vector<std::pair<int, int>> prefixes = getPrefixes(input, keys);
   return getEntries(input, prefixes);

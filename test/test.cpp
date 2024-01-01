@@ -1,3 +1,4 @@
+#define CATCH_CONFIG_MAIN
 #include <catch2/catch_test_macros.hpp>
 
 uint32_t factorial( uint32_t number ) {

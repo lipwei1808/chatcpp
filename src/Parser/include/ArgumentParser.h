@@ -3,18 +3,19 @@
 #include <string>
 #include <unordered_set>
 #include <unordered_map>
+#include "Pair.h"
 
 class ArgumentParser {
 public:
   std::unordered_map<std::string, std::string> parse(std::string input, std::unordered_set<std::string>* keys);
 private:
-  std::vector<std::pair<int, int>> getPrefixes(
+  std::vector<Pair<int, int>> getPrefixes(
     std::string input,
     std::unordered_set<std::string>* keys
   );
   std::unordered_map<std::string, std::string> getEntries(
     std::string input,
-    std::vector<std::pair<int, int>>& prefixes
+    std::vector<Pair<int, int>>& prefixes
   );
 };
 

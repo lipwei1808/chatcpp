@@ -38,20 +38,19 @@ std::vector<Pair<int, int>> ArgumentParser::getPrefixes(
 
 std::unordered_map<std::string, std::string> ArgumentParser::getEntries(
   std::string input,
-  std::vector<Pair<int, int>>& prefixes
+  const std::vector<Pair<int, int>>& prefixes
 ) {
   std::unordered_map<std::string, std::string> entries;
 
-  for (int i = 0; i < entries.size(); i++) {
+  for (int i = 0; i < prefixes.size(); i++) {
     Pair<int, int> pair = prefixes[i];
-    std::string prefix = input.substr(pair.getFirst(), pair.getSecond() + 1);
+    std::string prefix = input.substr(pair.getFirst(), pair.getSecond() - pair.getFirst() + 1);
     std::string arg;
     if (i == entries.size() - 1) {
-      arg = input.substr(pair.getSecond() + 1, std::string::npos);
+      arg = input.substr(pair.getSecond() + 1);
     } else {
-      arg = input.substr(pair.getSecond() + 1, prefixes[i + 1].getFirst());
+      arg = input.substr(pair.getSecond() + 1, prefixes[i + 1].getFirst() - pair.getSecond() - 1);
     }
-    std::cout << "Prefix: " << prefix << ", Argument: " << arg << std::endl;
     entries[prefix] = arg;
   }
 

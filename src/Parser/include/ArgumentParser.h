@@ -15,7 +15,7 @@ private:
   );
   std::unordered_map<std::string, std::string> getEntries(
     std::string input,
-    std::vector<Pair<int, int>>& prefixes
+    const std::vector<Pair<int, int>>& prefixes
   );
 };
 

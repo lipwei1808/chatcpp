@@ -1,8 +1,21 @@
 #include <string>
+#include <optional>
 #include <vector>
 #include "Entries.h"
 
 Entries::Entries(std::vector<std::string> keys): keys(keys) {}
+
+void Entries::setMap(std::unordered_map<std::string, std::vector<std::string>> map) {
+  this->map = map;
+}
+
+void Entries::addEntry(std::string key, std::string val) {
+  if (map.find(key) == map.end()) {
+    map[key] = std::vector<std::string>();
+  }
+  
+  map[key].push_back(val);
+}
 
 bool Entries::hasDuplicate() {
   return hasDuplicate(keys.begin(), keys.end());
@@ -33,4 +46,15 @@ bool Entries::hasAllKeys() {
   }
 
   return true;
+}
+
+std::unordered_map<std::string, std::vector<std::string>> Entries::getMap() {
+  return map;
+}
+
+std::optional<std::vector<std::string>> Entries::get(std::string key) {
+  if (map.find(key) == map.end()) {
+    return {};
+  }
+  return map[key];
 }

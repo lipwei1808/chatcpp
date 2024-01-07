@@ -1,6 +1,7 @@
 #ifndef _ENTRIES_H_
 #define _ENTRIES_H_
 #include <unordered_map>
+#include <initializer_list>
 #include <string>
 #include <optional>
 #include <vector>
@@ -17,7 +18,8 @@ public:
   std::unordered_map<std::string, std::vector<std::string>> getMap();
   std::optional<std::vector<std::string>> get(std::string key);
 private:
-  bool hasDuplicate(const std::vector<std::string>::iterator start, const std::vector<std::string>::iterator end);
+  template <typename Iterator>
+  bool hasDuplicate(Iterator start, Iterator end);
 private:
   std::unordered_map<std::string, std::vector<std::string>> map;
   std::vector<std::string> keys;

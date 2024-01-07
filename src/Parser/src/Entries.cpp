@@ -1,5 +1,6 @@
 #include <string>
 #include <optional>
+#include <initializer_list>
 #include <vector>
 #include "Entries.h"
 
@@ -22,20 +23,17 @@ bool Entries::hasDuplicate() {
 }
 
 bool Entries::hasDuplicate(std::initializer_list<std::string> keys) {
-  // return hasDuplicate(keys.begin(), keys.end());
-  return true;
+  return hasDuplicate(keys.begin(), keys.end());
 }
 
-bool Entries::hasDuplicate(const std::vector<std::string>::iterator start, const std::vector<std::string>::iterator end) {
+template <typename Iterator>
+bool Entries::hasDuplicate(Iterator start, Iterator end) {
   for (auto key = start; key != end; key++) {
-    if (map.find(*key) == map.end()) {
-        return false;
-    }
-    if (map[*key].size() > 1) {
-      return false;
+    if (map.find(*key) != map.end() && map[*key].size() > 1) {
+        return true;
     }
   }
-  return true;
+  return false;
 }
 
 bool Entries::hasAllKeys() {

@@ -46,7 +46,7 @@ std::unordered_map<std::string, std::string> ArgumentParser::getEntries(
     Pair<int, int> pair = prefixes[i];
     std::string prefix = input.substr(pair.getFirst(), pair.getSecond() - pair.getFirst() + 1);
     std::string arg;
-    if (i == entries.size() - 1) {
+    if (i == prefixes.size() - 1) {
       arg = input.substr(pair.getSecond() + 1);
     } else {
       arg = input.substr(pair.getSecond() + 1, prefixes[i + 1].getFirst() - pair.getSecond() - 1);

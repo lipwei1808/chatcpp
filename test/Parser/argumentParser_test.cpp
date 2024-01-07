@@ -91,9 +91,9 @@ TEST_CASE("getEntries correctly returns empty map when no prefix present", "[get
 
 TEST_CASE("getEntries correctly returns with prefix", "[getEntries]") {
   SECTION("retrieve all prefixes in input string") {
-    std::string input = "event runnig program from: 18/08/2001 to:19/08/2001";
-    std::vector<Pair<int, int>> prefixes({Pair<int, int>(21, 25), Pair<int, int>(38, 40)});
-    std::unordered_map<std::string, std::string> expected({{"from:", " 18/08/2001 "}, {"to:", "19/08/2001"}});
+    std::string input = "event runnig program from: 18/08/2001 to:19/08/2001 check: whola ";
+    std::vector<Pair<int, int>> prefixes({Pair<int, int>(21, 25), Pair<int, int>(38, 40), Pair<int, int>(52, 57)});
+    std::unordered_map<std::string, std::string> expected({{"from:", " 18/08/2001 "}, {"to:", "19/08/2001 "}, {"check:", " whola "}});
     REQUIRE(ArgumentParser().getEntries(input, prefixes) == expected);
   }
 

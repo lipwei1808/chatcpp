@@ -7,7 +7,7 @@
 
 std::string Event::format = "event [text] [from date] [to date] eg: event run 18/08/2001 19/08/2001";
 
-Event::Event(std::string name, std::tm to, std::tm from, bool marked): Task(name, marked), from(from), to(to) {}
+Event::Event(std::string name, std::tm from, std::tm to, bool marked): Task(name, marked), from(from), to(to) {}
 
 void Event::print(std::ostream &os) const {
   Task::print(os);

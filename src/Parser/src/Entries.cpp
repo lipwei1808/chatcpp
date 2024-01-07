@@ -1,28 +1,39 @@
 #include <string>
+#include <optional>
+#include <initializer_list>
 #include <vector>
 #include "Entries.h"
 
 Entries::Entries(std::vector<std::string> keys): keys(keys) {}
+
+void Entries::setMap(std::unordered_map<std::string, std::vector<std::string>> map) {
+  this->map = map;
+}
+
+void Entries::addEntry(std::string key, std::string val) {
+  if (map.find(key) == map.end()) {
+    map[key] = std::vector<std::string>();
+  }
+  
+  map[key].push_back(val);
+}
 
 bool Entries::hasDuplicate() {
   return hasDuplicate(keys.begin(), keys.end());
 }
 
 bool Entries::hasDuplicate(std::initializer_list<std::string> keys) {
-  // return hasDuplicate(keys.begin(), keys.end());
-  return true;
+  return hasDuplicate(keys.begin(), keys.end());
 }
 
-bool Entries::hasDuplicate(const std::vector<std::string>::iterator start, const std::vector<std::string>::iterator end) {
+template <typename Iterator>
+bool Entries::hasDuplicate(Iterator start, Iterator end) {
   for (auto key = start; key != end; key++) {
-    if (map.find(*key) == map.end()) {
-        return false;
-    }
-    if (map[*key].size() > 1) {
-      return false;
+    if (map.find(*key) != map.end() && map[*key].size() > 1) {
+        return true;
     }
   }
-  return true;
+  return false;
 }
 
 bool Entries::hasAllKeys() {
@@ -33,4 +44,15 @@ bool Entries::hasAllKeys() {
   }
 
   return true;
+}
+
+std::unordered_map<std::string, std::vector<std::string>> Entries::getMap() {
+  return map;
+}
+
+std::optional<std::vector<std::string>> Entries::get(std::string key) {
+  if (map.find(key) == map.end()) {
+    return {};
+  }
+  return map[key];
 }

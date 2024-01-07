@@ -17,6 +17,7 @@ public:
   bool hasAllKeys();
   std::unordered_map<std::string, std::vector<std::string>> getMap();
   std::optional<std::vector<std::string>> get(std::string key);
+  bool operator==(const Entries &other);
 private:
   template <typename Iterator>
   bool hasDuplicate(Iterator start, Iterator end);

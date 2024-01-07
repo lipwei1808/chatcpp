@@ -59,3 +59,7 @@ std::optional<std::vector<std::string>> Entries::get(std::string key) {
   }
   return map[key];
 }
+
+bool Entries::operator==(const Entries &other) {
+  return this->map == other.map;
+}

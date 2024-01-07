@@ -5,11 +5,11 @@
 #include <string>
 #include <optional>
 #include <vector>
+#include <unordered_set>
 
 class Entries {
 public:
-  Entries() = default;
-  Entries(std::vector<std::string> keys);
+  Entries(std::unordered_set<std::string>* keys = nullptr);
   void setMap(std::unordered_map<std::string, std::vector<std::string>> map);
   void addEntry(std::string key, std::string val);
   bool hasDuplicate();
@@ -22,7 +22,7 @@ private:
   bool hasDuplicate(Iterator start, Iterator end);
 private:
   std::unordered_map<std::string, std::vector<std::string>> map;
-  std::vector<std::string> keys;
+  std::unordered_set<std::string>* keys;
 };
 
 #endif // _ENTRIES_H_

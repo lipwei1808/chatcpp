@@ -6,6 +6,7 @@
 #include <unordered_set>
 #include <utility>
 #include "ArgumentParser.h"
+#include "Entries.h"
 #include "Pair.h"
 
 static inline Pair<int, int> getPairFromIndex(int current, int size) {
@@ -36,11 +37,17 @@ std::vector<Pair<int, int>> ArgumentParser::getPrefixes(
   return prefixes;
 }
 
-std::unordered_map<std::string, std::string> ArgumentParser::getEntries(
+Entries ArgumentParser::getEntries(
   std::string input,
+  std::unordered_set<std::string>* keys,
   const std::vector<Pair<int, int>>& prefixes
 ) {
-  std::unordered_map<std::string, std::string> entries;
+  Entries entries(keys);
+  if (prefixes.size() == 0) {
+    entries.addEntry("__preamble", input);
+  } else {
+    entries.addEntry("__preamble", input.substr(0, prefixes[0].getFirst()));
+  }
 
   for (int i = 0; i < prefixes.size(); i++) {
     Pair<int, int> pair = prefixes[i];
@@ -51,16 +58,16 @@ std::unordered_map<std::string, std::string> ArgumentParser::getEntries(
     } else {
       arg = input.substr(pair.getSecond() + 1, prefixes[i + 1].getFirst() - pair.getSecond() - 1);
     }
-    entries[prefix] = arg;
+    entries.addEntry(prefix, arg);
   }
 
   return entries;
 }
 
-std::unordered_map<std::string, std::string> ArgumentParser::parse(
+Entries ArgumentParser::parse(
   std::string input,
   std::unordered_set<std::string>* keys
 ) {
   std::vector<Pair<int, int>> prefixes = getPrefixes(input, keys);
-  return getEntries(input, prefixes);
+  return getEntries(input, keys, prefixes);
 }

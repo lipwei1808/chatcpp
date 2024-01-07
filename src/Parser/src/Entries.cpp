@@ -3,8 +3,9 @@
 #include <initializer_list>
 #include <vector>
 #include "Entries.h"
+#include <unordered_set>
 
-Entries::Entries(std::vector<std::string> keys): keys(keys) {}
+Entries::Entries(std::unordered_set<std::string>* keys): keys(keys) {}
 
 void Entries::setMap(std::unordered_map<std::string, std::vector<std::string>> map) {
   this->map = map;
@@ -19,7 +20,7 @@ void Entries::addEntry(std::string key, std::string val) {
 }
 
 bool Entries::hasDuplicate() {
-  return hasDuplicate(keys.begin(), keys.end());
+  return hasDuplicate(keys->begin(), keys->end());
 }
 
 bool Entries::hasDuplicate(std::initializer_list<std::string> keys) {
@@ -37,7 +38,9 @@ bool Entries::hasDuplicate(Iterator start, Iterator end) {
 }
 
 bool Entries::hasAllKeys() {
-  for (const std::string& key: keys) {
+  if (keys == nullptr) return true;
+
+  for (const std::string& key: *keys) {
     if (map.find(key) == map.end()) {
       return false;
     }

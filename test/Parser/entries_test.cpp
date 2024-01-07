@@ -1,12 +1,16 @@
 #include <catch2/catch_test_macros.hpp>
 #include "Entries.h"
 #include <algorithm>
+#include <unordered_set>
 
 TEST_CASE("Constructor", "[Entries]") {
   REQUIRE_NOTHROW(Entries());
 
-  REQUIRE_NOTHROW(Entries(std::vector<std::string>()));
-  REQUIRE_NOTHROW(Entries(std::vector<std::string>({"mock", "data"})));
+  std::unordered_set<std::string> keys;
+  REQUIRE_NOTHROW(Entries(&keys));
+
+  std::unordered_set<std::string> keys2({"mock", "data"});
+  REQUIRE_NOTHROW(Entries(&keys2));
 }
 
 TEST_CASE("setMap correctly sets map", "[setMap]") {
@@ -55,7 +59,8 @@ TEST_CASE("addEntry correctly adds an entry to map", "[addEntry]") {
 
 TEST_CASE("hasDuplicate with no parameters check with keys field", "[hasDuplicate]") {
   SECTION("keys are present in string") {
-    Entries e(std::vector<std::string>({"from:", "to:"}));
+    std::unordered_set<std::string> keys({"from:", "to:"});
+    Entries e(&keys);
     std::unordered_map<std::string, std::vector<std::string>> map({
       {"from:", std::vector<std::string>({"test"})},
       {"to:", std::vector<std::string>({"mock"})}
@@ -72,7 +77,8 @@ TEST_CASE("hasDuplicate with no parameters check with keys field", "[hasDuplicat
   }
 
   SECTION("some keys are in string") {
-    Entries e(std::vector<std::string>({"to:"}));
+    std::unordered_set<std::string> keys({"to:"});
+    Entries e(&keys);
     std::unordered_map<std::string, std::vector<std::string>> map({
       {"from:", std::vector<std::string>({"test", "another"})},
       {"to:", std::vector<std::string>({"mock"})}
@@ -83,7 +89,8 @@ TEST_CASE("hasDuplicate with no parameters check with keys field", "[hasDuplicat
   }
 
   SECTION("more keys present in string") {
-    Entries e(std::vector<std::string>({"to:", "from:", "when:"}));
+    std::unordered_set<std::string> keys({"to:", "from:", "when:"});
+    Entries e(&keys);
     std::unordered_map<std::string, std::vector<std::string>> map({
       {"from:", std::vector<std::string>({"test", "another"})},
       {"to:", std::vector<std::string>({"mock"})}
@@ -138,7 +145,8 @@ TEST_CASE("hasAllKeys correctly returns if all keys are present", "[hasAllKeys]"
   }
 
   SECTION("keys present in Entries field") {
-    Entries e(std::vector<std::string>({"from:", "to:"}));
+    std::unordered_set<std::string> keys({"from:", "to:"});
+    Entries e(&keys);
     REQUIRE(!e.hasAllKeys());
     std::unordered_map<std::string, std::vector<std::string>> map({
       {"from:", std::vector<std::string>({"test"})},
@@ -156,7 +164,8 @@ TEST_CASE("hasAllKeys correctly returns if all keys are present", "[hasAllKeys]"
 }
 
 TEST_CASE("getMap returns map", "[getMap]") {
-  Entries e(std::vector<std::string>({"from:", "to:"}));
+  std::unordered_set<std::string> keys({"from:", "to:"});
+  Entries e(&keys);
   std::unordered_map<std::string, std::vector<std::string>> map({
     {"from:", std::vector<std::string>({"test"})},
     {"to:", std::vector<std::string>({"mock", " anotehr"})},
